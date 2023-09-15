@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCard> = ({
         alt='Image'
         className='aspect-square object-cover rounded-md'
         />
-        <div className='opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5'>
+        <div className='opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition absolute w-full px-6 bottom-5'>
           <div className='flex gap-x-6 justify-center'>
             <IconButton
             onClick={(e) => {
