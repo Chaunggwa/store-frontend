@@ -36,8 +36,8 @@ const MainNav: React.FC<MainNavProps> = ({
                 key={route.href}
                 href={route.href}
                 className={cn(
-                    "hidden md:block text-sm font-medium transition-colors hover:text-black",
-                    route.active ? "text-black" : "text-neutral-500"
+                    "hidden md:block text-sm font-medium transition-colors hover:text-black dark:hover:text-green-500",
+                    route.active ? "text-teal-500" : "dark:text-neutral-200 text-neutral-500"
                 )}
                 >{route.label}</Link>
             ))
@@ -60,13 +60,7 @@ const MainNav: React.FC<MainNavProps> = ({
                 route.active ? "text-black" : "text-neutral-500"
             )}
             >
-                {/* <Link
-                    key={route.href}
-                    href={route.href}
-                    className={cn("w-full text-sm font-medium transition-colors hover:text-primary", 
-                    route.active ? "text-black dark:text-white" : "text-muted-foreground"
-                    )}
-                    >{route.label}</Link> */}{route.label}
+                {route.label}
             </DropdownMenuItem>
             ))}
         </DropdownMenuGroup>
