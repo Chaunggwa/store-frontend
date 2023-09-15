@@ -56,8 +56,8 @@ const MainNav: React.FC<MainNavProps> = ({
             <DropdownMenuItem 
             key={route.href} 
             onClick={() => { router.push(route.href) }}
-            className={cn("text-sm font-medium transition-colors hover:text-black",
-                route.active ? "text-black" : "text-neutral-500"
+            className={cn("text-sm font-medium transition-colors hover:text-black  dark:hover:text-green-500",
+            route.active ? "text-teal-500" : "dark:text-neutral-200 text-neutral-500"
             )}
             >
                 {route.label}
