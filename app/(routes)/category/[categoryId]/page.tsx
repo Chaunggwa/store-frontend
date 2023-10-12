@@ -28,11 +28,11 @@ const Category: React.FC<CategoryPageProps> =  ({
     params, searchParams
 }) => {
     const[mounted, setIsMounted] = useState(false);
-    const cart = useCart();
     const [products, setProducts] = useState<Product[]>([]);
     const [sizes, setSizes] = useState<Size[]>([]);
     const [colors, setColors] = useState<Color[]>([]);
     const [category, setCategory] = useState<Category>();
+    const cart = useCart();
 
     useEffect(() => {
         const getData = async() => {

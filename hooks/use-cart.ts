@@ -35,7 +35,7 @@ const useCart = create(
         setStoreId: (id: string) => set({items: [...get().items], storeId: id})
     }), {
         name: "cart-storage",
-        storage: createJSONStorage(() => localStorage)
+        storage: createJSONStorage(() => sessionStorage)
     })
 );
 

@@ -12,12 +12,12 @@ export const revalidate = 0;
 const Home =  () => {
   const cart = useCart();
   const [products, setProducts] = useState<Product[]>([]);
-  const [billboard, setBillboard] = useState<BillboardType>();
+  const [billboards, setBillboard] = useState<BillboardType[] | undefined | any>();
   useEffect(() => {
     const getData = async () => {
       const products = await getProducts(cart.storeId,{isFearuted: true});
-      const billboard = await getBillboards(cart.storeId,"64f928d15d3d07f07d3448ba");
-      setBillboard(billboard);
+      const billboards = await getBillboards(cart.storeId);
+      setBillboard(billboards);
       setProducts(products);
     }
     getData();
@@ -25,7 +25,7 @@ const Home =  () => {
   return (
     <Container>
     <div className='space-y-10 pb-10'>
-      <Billboard data={billboard ? billboard[0] : undefined}/>
+      <Billboard data={billboards ? billboards[0] : undefined}/>
     
     <div className='flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8'>
       <ProductList title="Featured Products" items={products} />

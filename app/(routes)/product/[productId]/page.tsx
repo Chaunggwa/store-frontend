@@ -1,25 +1,45 @@
+"use client";
 import getProduct from '@/actions/get-product'
 import getProducts from '@/actions/get-products'
 import Gallery from '@/components/gallery'
 import Info from '@/components/info'
 import ProductList from '@/components/products-list'
 import Container from '@/components/ui/container'
-import React from 'react'
+import useCart from '@/hooks/use-cart'
+import { Product } from '@/types';
+import React, { useEffect, useState } from 'react'
 
-export const revalidate = 0;
 interface ProductPageProps {
   params: {
     productId: string
   }
 }
-const ProductPage: React.FC<ProductPageProps> = async ({
+const ProductPage: React.FC<ProductPageProps> = ({
   params
 }) => {
-  const product = await getProduct(params.productId);
-  console.log(product?.category?.id)
-  const suggestedProducts = await getProducts({
-    categoryId: product?.category?.id
-  })
+  const cart = useCart();
+  const [mounted, setMounted] = useState(false);
+  const [product, setProduct] = useState<Product | any>();
+  const [suggestedProducts, setSuggestedProducts] = useState<Product[] | any>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const product = await getProduct(cart.storeId, params.productId);
+      const suggestedProducts = await getProducts(cart.storeId, {
+        categoryId: product?.category?.id
+      })
+      console.log(product);
+      setProduct(product);
+      setSuggestedProducts(suggestedProducts);
+      setMounted(true);
+    }
+    getData();
+    
+  }, [cart.storeId]);
+
+  if(!mounted) {
+    return null;
+  }
   
   return (
     <div className='bg-white'>
