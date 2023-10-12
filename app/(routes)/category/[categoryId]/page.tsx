@@ -1,14 +1,17 @@
+"use client";
 import getCategory from '@/actions/get-category';
 import getColors from '@/actions/get-colors';
 import getProducts from '@/actions/get-products';
 import getSizes from '@/actions/get-sizes';
 import Billboard from '@/components/billboard';
 import Container from '@/components/ui/container';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Filter from './components/filter';
 import NoResults from '@/components/ui/NoResults';
 import ProductCard from '@/components/ui/product-card';
 import MobileFilters from './components/mobile-filters';
+import useCart from '@/hooks/use-cart';
+import { Category, Color, Product, Size } from '@/types';
 
 export const revalidate = 0;
 interface CategoryPageProps {
@@ -21,22 +24,43 @@ interface CategoryPageProps {
     }
 }
 
-const Category: React.FC<CategoryPageProps> = async ({
+const Category: React.FC<CategoryPageProps> =  ({
     params, searchParams
 }) => {
-    const products = await getProducts({
-        categoryId: params.categoryId,
-        colorId: searchParams.colorId,
-        sizeId: searchParams.sizeId
-    });
-    const sizes = await getSizes();
-    const colors = await getColors();
-    const category = await getCategory(params.categoryId);
+    const[mounted, setIsMounted] = useState(false);
+    const cart = useCart();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [sizes, setSizes] = useState<Size[]>([]);
+    const [colors, setColors] = useState<Color[]>([]);
+    const [category, setCategory] = useState<Category>();
 
+    useEffect(() => {
+        const getData = async() => {
+            const sizes = await getSizes(cart.storeId);
+           
+            const colors = await getColors(cart.storeId);
+            const category = await getCategory(cart.storeId, params.categoryId);
+            const products = await getProducts(cart.storeId, {
+                categoryId: params.categoryId,
+                colorId: searchParams.colorId,
+                sizeId: searchParams.sizeId
+            });
+            setSizes(sizes);
+            setColors(colors);
+            setCategory(category);
+            setProducts(products);
+        }
+        getData();
+        setIsMounted(true);
+    }, [cart.storeId]);
+    
+  if(!mounted) {
+    return null;
+  }
   return (
     <div className='bg-white'>
         <Container>
-            <Billboard data={category.billboard}/>
+            <Billboard data={category ? category.billboard : undefined}/>
         </Container>
         
         <div className='px-4 sm:px-6 lg:px-8 pb-24'>

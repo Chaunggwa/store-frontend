@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react'
 import CartItem from './components/cart-item';
 import Summary from './components/summary';
 
+
 const Cart = () => {
     const [isMounted, setIsMounted] = useState(false);
     const cart = useCart();
+   
     useEffect(() => {
         setIsMounted(true);
     }, []);

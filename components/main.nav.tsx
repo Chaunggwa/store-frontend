@@ -23,15 +23,15 @@ const MainNav: React.FC<MainNavProps> = ({
 }) => {
     const pathname = usePathname();
     const router = useRouter();
-    const routes = data.map((route: Category)=> ({
+    const routes = (data.length > 0) ? data.map((route: Category)=> ({
         href: `/category/${route.id}`,
         label: route.name,
         active: pathname === `/category/${route.id}`
-    }))
+    })) : [];
   return (
-    <nav className='mx-6 flex items-center space-x-4 lg:space-x-6'>
+    <nav className='md:mx-6 flex items-center space-x-4 lg:space-x-6'>
         {
-            routes.map((route: any) => (
+            (routes.length > 0) ? routes.map((route: any) => (
                 <Link
                 key={route.href}
                 href={route.href}
@@ -40,7 +40,9 @@ const MainNav: React.FC<MainNavProps> = ({
                     route.active ? "text-teal-500" : "dark:text-neutral-200 text-neutral-500"
                 )}
                 >{route.label}</Link>
-            ))
+            )) : <span className={cn(
+                "hidden md:block text-sm font-medium transition-colors hover:text-black dark:hover:text-green-500"
+            )}>No categories</span>
         }
          <DropdownMenu>
       <DropdownMenuTrigger asChild >
@@ -52,7 +54,7 @@ const MainNav: React.FC<MainNavProps> = ({
         <DropdownMenuLabel>Categories</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-            {routes.map((route) => (
+            {(routes.length > 0) ? routes.map((route) => (
             <DropdownMenuItem 
             key={route.href} 
             onClick={() => { router.push(route.href) }}
@@ -62,7 +64,8 @@ const MainNav: React.FC<MainNavProps> = ({
             >
                 {route.label}
             </DropdownMenuItem>
-            ))}
+            )) : <DropdownMenuItem className={cn("text-sm font-medium transition-colors hover:text-black  dark:hover:text-green-500"
+            )}>No categories</DropdownMenuItem>}
         </DropdownMenuGroup>
        </DropdownMenuContent>
        </DropdownMenu>

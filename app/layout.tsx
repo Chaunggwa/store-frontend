@@ -19,10 +19,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
-    <html lang="en">
+    <html lang="en" className='max-w-full '>
             
-      <body className={font.className}>
+      <body className={`font.className` + "max-w-full  box-border p-8"}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
        <ModalProvider />
        <ToastProvider />
