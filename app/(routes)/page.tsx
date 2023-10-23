@@ -28,7 +28,7 @@ const Home =  () => {
       <Billboard data={billboards ? billboards[0] : undefined}/>
     
     <div className='flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8'>
-      <ProductList title="Featured Products" items={products} />
+      {(products.length < 1) ? <span className="loading loading-ring loading-lg"></span> : <ProductList title="Featured Products" items={products} />}
     </div>
     </div>
     </Container>

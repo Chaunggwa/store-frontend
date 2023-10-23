@@ -44,6 +44,10 @@ const ProductPage: React.FC<ProductPageProps> = ({
   return (
     <div className='bg-white'>
       <Container>
+        {
+          !product ?
+          <span className="loading loading-ring loading-lg"></span>
+          :
         <div className='px-4 py-10 sm:px-6 lg:px-8'>
           <div className='lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8'>
               {/* Gallery  */}
@@ -57,6 +61,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
           <hr className='my-10' />
           <ProductList title="Suggested products" items={suggestedProducts}/>
         </div>
+        }
       </Container>
     </div>
   )
